@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import './App.css'
 import Laskuri from './laskuri.jsx'
 import Viesti from './viesti.jsx'
+import Posts from './posts.jsx'
 
 const App = () => {
 
@@ -17,8 +18,10 @@ const App = () => {
 
       <h1>Hello from React!</h1>
 
-      {showLaskuri && <Laskuri huomio={huomio} />}
+      <Posts />
 
+      {showLaskuri && <Laskuri huomio={huomio} />}
+      
       {showLaskuri && <button onClick={() => setShowLaskuri(!showLaskuri)}>Piilota laskuri</button>}
 
       {!showLaskuri && <button onClick={() => setShowLaskuri(!showLaskuri)}>Näytä laskuri</button>}
