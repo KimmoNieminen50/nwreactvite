@@ -1,0 +1,133 @@
+import { useState } from 'react'
+import './App.css'
+import CustomerService from './services/customerservice.js'
+
+const CustomerAdd = ({x, reload, setMessage, setShowMessage, setIspositive}) => {
+ 
+  const [newCustomerId, setNewCustomerId] = useState('')
+  const [newCompanyName, setNewCompanyName] = useState('')
+  const [newContactName, setNewContactName] = useState('')
+  const [newContactTitle, setNewContactTitle] = useState('')
+  const [newAddress, setNewAddress] = useState('')
+  const [newCity, setNewCity] = useState('')
+  const [newRegion, setNewRegion] = useState('')
+  const [newPostalCode, setNewPostalCode] = useState('')
+  const [newCountry, setNewCountry] = useState('')
+  const [newPhone, setNewPhone] = useState('')
+  const [newFax, setNewFax] = useState('')
+  const [showForm, setShowForm] = useState(false)
+
+  const formSubmit = e => {
+    e.preventDefault()
+    const newCustomer = {
+      customerId: newCustomerId,
+      companyName: newCompanyName,
+      contactName: newContactName,
+      contactTitle: newContactTitle,
+      address: newAddress,
+      city: newCity,
+      region: newRegion,
+      postalCode: newPostalCode,
+      country: newCountry,
+      phone: newPhone,
+      fax: newFax
+    }
+
+    CustomerService.create(newCustomer)
+      .then(response => {
+       
+        setNewCustomerId('')
+        setNewCompanyName('')
+        setNewContactName('')
+        setNewContactTitle('')
+        setNewAddress('')
+        setNewCity('')
+        setNewRegion('')
+        setNewPostalCode('')
+        setNewCountry('')
+        setNewPhone('')
+        setNewFax('')
+
+
+        setMessage(response.data)
+        setIspositive(true)
+        setShowMessage(true)
+
+        setShowForm(false)
+        reload(!x)
+        setTimeout(() => {
+          setShowMessage(false)
+         
+        }, 5000)
+      })
+      .catch(error => {
+        setMessage(error.message)
+        setIspositive(false)
+        setShowMessage(true)
+        setTimeout(() => {
+          setShowMessage(false)
+        }, 6000)
+      })
+  }
+
+  return (
+    <>
+      <h3 onClick={() => setShowForm(!showForm)}>(+)Adding new customer</h3>
+
+      {showForm && (
+        <>
+          <hr />
+          <form onSubmit={formSubmit} className='addform'>
+            <div>
+              <label>Customer ID</label>
+              <input value={newCustomerId} onChange={e => setNewCustomerId(e.target.value)} />
+            </div>
+            <div>
+              <label>Company Name</label>
+              <input value={newCompanyName} onChange={e => setNewCompanyName(e.target.value)} />
+            </div>
+            <div>
+              <label>Contact Name</label>
+              <input value={newContactName} onChange={e => setNewContactName(e.target.value)} />
+            </div>
+            <div>
+              <label>Contact Title</label>
+              <input value={newContactTitle} onChange={e => setNewContactTitle(e.target.value)} />
+            </div>
+            <div>
+              <label>Address</label>
+              <input value={newAddress} onChange={e => setNewAddress(e.target.value)} />
+            </div>
+            <div>
+              <label>City</label>
+              <input value={newCity} onChange={e => setNewCity(e.target.value)} />
+            </div>
+            <div>
+              <label>Region</label>
+              <input value={newRegion} onChange={e => setNewRegion(e.target.value)} />
+            </div>
+            <div>
+              <label>Postal Code</label>
+              <input value={newPostalCode} onChange={e => setNewPostalCode(e.target.value)} />
+            </div>
+            <div>
+              <label>Country</label>
+              <input value={newCountry} onChange={e => setNewCountry(e.target.value)} />
+            </div>
+            <div>
+              <label>Phone</label>
+              <input value={newPhone} onChange={e => setNewPhone(e.target.value)} />
+            </div>
+            <div>
+              <label>Fax</label>
+              <input value={newFax} onChange={e => setNewFax(e.target.value)} />
+            </div>
+            <button type="submit">Save</button>
+          </form>
+        </>
+      )}
+    </>
+  )
+}
+
+export default CustomerAdd
