@@ -1,6 +1,6 @@
-import './App.css'
+import '../App.css'
 import React, {useState, useEffect} from 'react'
-import customerservice from './services/customerservice'
+import customerservice from '../services/customerservice'
 import CustomerEdit from './customeredit'
 
 //Receive customer as a prop from customerlist
@@ -40,7 +40,8 @@ const removeCustomer = () => {
             window.scrollBy(0, -10000) // Scrollataan ylös jotta nähdään alert :)
     
             setTimeout(() => {
-              setShowMessage(false)}, 4000)
+            setShowMessage(false)}, 4000)
+            reload(!x)
           })
 
   }
@@ -58,7 +59,7 @@ const removeCustomer = () => {
         <h4>{customer.companyName}</h4>
 
         <button onClick={() => setEditing(true)}>Edit</button>
-        <button onClick={() => removeCustomer}>Delete</button>
+        <button onClick={() => removeCustomer()}>Delete</button>
         { editing && <CustomerEdit custToEdit={customer} x={x} reload={reload} setMessage={setMessage} setShowMessage={setShowMessage} setIspositive={setIspositive} setEditing={setEditing} setShowDetails={setShowDetails} />}
 
         { !editing &&

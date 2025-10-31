@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import './App.css'
-import CustomerService from './services/customerservice.js'
+import '../App.css'
+import UserService from '../services/userservice.js'
 
-const CustomerAdd = ({x, reload, setMessage, setShowMessage, setIspositive}) => {
+const UserAdd = ({x, reload, setMessage, setShowMessage, setIspositive}) => {
  
   const [newCustomerId, setNewCustomerId] = useState('')
   const [newCompanyName, setNewCompanyName] = useState('')
@@ -33,7 +33,7 @@ const CustomerAdd = ({x, reload, setMessage, setShowMessage, setIspositive}) => 
       fax: newFax
     }
 
-    CustomerService.create(newCustomer)
+    UserService.create(newUser)
       .then(response => {
        
         setNewCustomerId('')
@@ -72,7 +72,7 @@ const CustomerAdd = ({x, reload, setMessage, setShowMessage, setIspositive}) => 
 
   return (
     <>
-      <h3 onClick={() => setShowForm(!showForm)}>(+)Adding new customer</h3>
+      <h3 onClick={() => setShowForm(!showForm)}>(+)Add new user</h3>
 
       {showForm && (
         <>
@@ -130,4 +130,4 @@ const CustomerAdd = ({x, reload, setMessage, setShowMessage, setIspositive}) => 
   )
 }
 
-export default CustomerAdd
+export default UserAdd

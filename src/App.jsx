@@ -3,7 +3,8 @@ import './App.css'
 import Laskuri from './laskuri.jsx'
 import Viesti from './viesti.jsx'
 import Posts from './posts.jsx'
-import Customerlist from './customerlist.jsx'
+import Customerlist from './customer_components/customerlist.jsx'
+import Userlist from './user_components/userlist.jsx'
 import Message from './message.jsx'
 //Navigointi ja Bootstrap importit
 import Navbar from 'react-bootstrap/Navbar'
@@ -36,8 +37,8 @@ const App = () => {
         <Nav className="mr-auto">
           <Nav.Link href='/customers'>Customers</Nav.Link>
           <Nav.Link href='/users'>Users</Nav.Link>
-          <Nav.Link href='/laskuri'>Counter</Nav.Link>
-          <Nav.Link href='/posts'>Posts</Nav.Link>
+          {/* <Nav.Link href='/laskuri'>Counter</Nav.Link>
+          <Nav.Link href='/posts'>Posts</Nav.Link> */}
             
         </Nav>
       </Navbar>
@@ -50,6 +51,10 @@ const App = () => {
       <Routes>
 
         <Route path="/customers" element={<Customerlist setMessage={setMessage} setIspositive={setIspositive}
+        setShowMessage={setShowMessage} />}>
+        </Route>
+
+        <Route path="/users" element={<Userlist setMessage={setMessage} setIspositive={setIspositive}
         setShowMessage={setShowMessage} />}>
         </Route>
 

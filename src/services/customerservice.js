@@ -15,7 +15,7 @@ const create = newCustomer => {
 }
 //Use customerservice.remove(id) to delete a customer by id
 const remove = id => {
-    return axios.delete(baseUrl + "/" + id) 
+    return axios.delete(`${baseUrl}/${id}`) 
 }
 
 //Use customerservice.edit to edit a customer

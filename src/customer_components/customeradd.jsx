@@ -1,21 +1,22 @@
 import { useState } from 'react'
-import './App.css'
-import CustomerService from './services/customerservice.js'
+import '../App.css'
+import CustomeSservice from '../services/customerservice.js'
 
-const CustomerEdit = ({custToEdit, x, reload, setMessage, setShowMessage, setIspositive, setEditing, setShowDetails}) => {
+const CustomerAdd = ({x, reload, setMessage, setShowMessage, setIspositive}) => {
+ 
+  const [newCustomerId, setNewCustomerId] = useState('')
+  const [newCompanyName, setNewCompanyName] = useState('')
+  const [newContactName, setNewContactName] = useState('')
+  const [newContactTitle, setNewContactTitle] = useState('')
+  const [newAddress, setNewAddress] = useState('')
+  const [newCity, setNewCity] = useState('')
+  const [newRegion, setNewRegion] = useState('')
+  const [newPostalCode, setNewPostalCode] = useState('')
+  const [newCountry, setNewCountry] = useState('')
+  const [newPhone, setNewPhone] = useState('')
+  const [newFax, setNewFax] = useState('')
+  const [showForm, setShowForm] = useState(false)
 
-  const [newCustomerId, setNewCustomerId] = useState(custToEdit.customerId)
-  const [newCompanyName, setNewCompanyName] = useState(custToEdit.companyName)
-  const [newContactName, setNewContactName] = useState(custToEdit.contactName)
-  const [newContactTitle, setNewContactTitle] = useState(custToEdit.contactTitle)
-  const [newAddress, setNewAddress] = useState(custToEdit.address)
-  const [newCity, setNewCity] = useState(custToEdit.city)
-  const [newRegion, setNewRegion] = useState(custToEdit.region)
-  const [newPostalCode, setNewPostalCode] = useState(custToEdit.postalCode)
-  const [newCountry, setNewCountry] = useState(custToEdit.country)
-  const [newPhone, setNewPhone] = useState(custToEdit.phone)
-  const [newFax, setNewFax] = useState(custToEdit.fax)
-  
   const formSubmit = e => {
     e.preventDefault()
     const newCustomer = {
@@ -32,7 +33,7 @@ const CustomerEdit = ({custToEdit, x, reload, setMessage, setShowMessage, setIsp
       fax: newFax
     }
 
-    CustomerService.edit(newCustomer)
+    CustomerService.create(newCustomer)
       .then(response => {
        
         setNewCustomerId('')
@@ -52,15 +53,12 @@ const CustomerEdit = ({custToEdit, x, reload, setMessage, setShowMessage, setIsp
         setIspositive(true)
         setShowMessage(true)
 
-        setEditing(false)
+        setShowForm(false)
         reload(!x)
-        setShowDetails(false)
-        window.scrollBy(0, -10000) // Scrollataan ylös jotta nähdään alert :)
         setTimeout(() => {
           setShowMessage(false)
-        }, 6000)      
          
-        
+        }, 5000)
       })
       .catch(error => {
         setMessage(error.message)
@@ -70,17 +68,19 @@ const CustomerEdit = ({custToEdit, x, reload, setMessage, setShowMessage, setIsp
           setShowMessage(false)
         }, 6000)
       })
-    }
+  }
 
-    return (
+  return (
+    <>
+      <h3 onClick={() => setShowForm(!showForm)}>(+)Add new customer</h3>
+
+      {showForm && (
         <>
-        <h4>Editing customer: {custToEdit.companyName} </h4>
-
-        <hr />
+          <hr />
           <form onSubmit={formSubmit} className='addform'>
             <div>
               <label>Customer ID</label>
-              <input value={newCustomerId} readOnly />
+              <input value={newCustomerId} onChange={e => setNewCustomerId(e.target.value)} />
             </div>
             <div>
               <label>Company Name</label>
@@ -123,10 +123,11 @@ const CustomerEdit = ({custToEdit, x, reload, setMessage, setShowMessage, setIsp
               <input value={newFax} onChange={e => setNewFax(e.target.value)} />
             </div>
             <button type="submit">Save</button>
-            <button onClick={() => setEditing(false)}>Cancel</button>
           </form>
         </>
-    )
+      )}
+    </>
+  )
 }
-    
-export default CustomerEdit
+
+export default CustomerAdd
